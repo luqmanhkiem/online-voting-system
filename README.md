@@ -88,34 +88,37 @@ Eror 409
 | 5 | GET    | /api/staff/teams  | Header: Authorization: Bearer admin                          | curl http://localhost:8080/api/staff/teams -H "Authorization: Bearer admin"                                                            |
 | 6 | POST   | /api/staff/export | Header: Authorization: Bearer admin                          | curl -X POST http://localhost:8080/api/staff/export -H "Authorization: Bearer admin"
 
-#### 1️⃣ Voter Web App
-- **Purpose**  
-  Allows voters to log in with their **matric number**, view teams, and cast **one single vote**.
+### 📊 Admin Web App – Firebase Edition
 
-- **Technology Stack**  
-  • Pure **HTML5**, **CSS3**, **vanilla JavaScript (ES6)**  
-  • Zero build step; files served statically by Apache/Nginx
+#### Purpose
+Central **real-time dashboard** for staff/admins to:
+1. Log in with username & password.  
+2. View **live vote counts** and **voter status** updated every 5 s.  
+3. Trigger **one-click backup** of the voter roll into **Firebase Firestore** instead of Google Sheets.  
+4. Observe export status in **real-time** via Firestore listeners.
 
-- **API Integration**  
-  • All network calls via `fetch()`  
-  • JWT stored in an **HttpOnly cookie** (automatically attached)  
-  • After a successful vote the UI **disables the form** and displays “Already voted”
+#### Technology Stack
+- **HTML5**, **CSS3**, **vanilla JavaScript (ES6)**  
+- **Firebase JS SDK v10** (`firebase-app`, `firebase-firestore`)  
+- **Chart.js v4** – live bar chart of team votes  
+- No build step; served statically by Apache/Nginx
 
----
+#### API Integration
+| Method | Endpoint            | Headers / Body                                                 | cURL snippet                                                                                                                             |
+| ------ | ------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| POST   | `/api/staff/login`  | Body (JSON): `{ "username": "admin", "password": "admin123" }` | `curl -X POST http://localhost:8080/api/staff/login -H "Content-Type: application/json" -d '{"username":"admin","password":"admin123"}'` |
+| GET    | `/api/staff/teams`  | Header: `Authorization: Bearer <JWT>`                          | `curl http://localhost:8080/api/staff/teams -H "Authorization: Bearer <JWT>"`                                                            |
+| POST   | `/api/staff/export` | Header: `Authorization: Bearer <JWT>`                          | `curl -X POST http://localhost:8080/api/staff/export -H "Authorization: Bearer <JWT>"`                                                   |
 
-#### 2️⃣ Admin Web App
-- **Purpose**  
-  Dashboard for **staff/admins** to observe **live results**, browse the **voter list**, and trigger a **Google-Sheet export**.
-
-- **Technology Stack**  
-  • Same as voter app: HTML, CSS, JS  
-  • **Chart.js v4** for a real-time bar chart that refreshes every **10 s**
-
-- **API Integration**  
-  • Uses `fetch()` with the JWT cookie  
-  • Polling endpoint `/teams` every 10 s for live updates  
-  • On **Export** click, calls `/export/sheet` and opens the returned Google Sheet URL in a new tab
-
+- **Authentication**  
+  `POST /api/staff/login` returns a short-lived **admin JWT** stored in an HttpOnly cookie.  
+- **Realtime Data**  
+  Front-end uses the **Firebase JS SDK** (`onSnapshot`) on collection `exports/{electionId}/voters` for live updates.  
+- **Export Flow**  
+  1. Admin clicks **Export to Firebase**.  
+  2. `POST /api/staff/export` writes the voter list into Firestore at  
+     `exports/{electionId}/voters/{matric_no}` (fields: `matric_no`, `voted`, `voted_at`, `exported_at`).  
+  3. Firestore listener instantly shows **Export completed** toast and displays the new document count.
 ## Database Design
 
 ### Entity-Relationship Diagram
