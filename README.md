@@ -29,10 +29,17 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 ## 🔧 Backend Application
 
 ### Technology Stack
-- **Language**: PHP
-- **Database**: MySQL
-- **External Service**: Firebase Realtime Database
-- **Security**: Basic Session-based Authentication
+| Component       | Technology        |
+|----------------|-------------------|
+| Language        | Java 17           |
+| Framework       | Spring Boot 3.5.3 |
+| Build Tool      | Maven             |
+| Database        | MySQL             |
+| ORM             | Spring Data JPA (Hibernate) |
+| Security        | Spring Security   |
+| API Format      | RESTful (JSON)    |
+| External Service| Firebase Firestore|
+| Authentication  | Token-based (matricNo / username) |
 
 
 | # | Method | Endpoint & Query     | Headers / Body                              | cURL snippet                                                                                                      |
