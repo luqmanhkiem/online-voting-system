@@ -50,7 +50,7 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 
 Success Response 200
 
-{
+```{
   "token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
   "role": "voter",
   "expires_in": 3600
@@ -58,13 +58,13 @@ Success Response 200
 
 Error Response 401
 
-{ "error": "Invalid credentials" }
+```{ "error": "Invalid credentials" }
 
 **2. GET /teams**
 
 Success Response 200
 
-[
+```[
   { "id": 1, "name": "Team Kasturi", "votes": 124 },
   { "id": 2, "name": "Team Lestari", "votes": 98 },
   { "id": 3, "name": "Team Jebat",   "votes": 117 }
@@ -74,7 +74,7 @@ Success Response 200
 
 Success 201
 
-{ "message": "Vote recorded" }
+```{ "message": "Vote recorded" }
 
 Eror 409
 
