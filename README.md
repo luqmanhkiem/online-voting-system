@@ -33,6 +33,21 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 - **External Service**: Google Sheets API
 - **Security**: Basic Session-based Auth
 
+
+| # | Method | Endpoint & Query     | Headers / Body                              | cURL snippet                                                                                                      |
+| - | ------ | -------------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| 1 | POST   | `/api/login`         | Body (JSON): `{ "matricNo": "B032310678" }` | `curl -X POST http://localhost:8080/api/login -H "Content-Type: application/json" -d '{"matricNo":"B032310678"}'` |
+| 2 | GET    | `/api/teams`         | none                                        | `curl http://localhost:8080/api/teams`                                                                            |
+| 3 | POST   | `/api/vote?teamId=2` | Header: `Authorization: Bearer B032310678`  | `curl -X POST "http://localhost:8080/api/vote?teamId=2" -H "Authorization: Bearer B032310678"`                    |
+
+
+| # | Method | Endpoint            | Headers / Body                                                 | cURL snippet                                                                                                                             |
+| - | ------ | ------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| 4 | POST   | `/api/staff/login`  | Body (JSON): `{ "username": "admin", "password": "admin123" }` | `curl -X POST http://localhost:8080/api/staff/login -H "Content-Type: application/json" -d '{"username":"admin","password":"admin123"}'` |
+| 5 | GET    | `/api/staff/teams`  | Header: `Authorization: Bearer admin`                          | `curl http://localhost:8080/api/staff/teams -H "Authorization: Bearer admin"`                                                            |
+| 6 | POST   | `/api/staff/export` | Header: `Authorization: Bearer admin`                          | `curl -X POST http://localhost:8080/api/staff/export -H "Authorization: Bearer admin"`                                                   |
+
+
 ## Database Design
 
 ### Entity-Relationship Diagram
