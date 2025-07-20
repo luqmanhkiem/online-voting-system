@@ -37,8 +37,19 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 
 ### Entity-Relationship Diagram
 ![erddad (1)](https://github.com/user-attachments/assets/97643778-ec2b-4265-abc1-86b9c1fc2909)
+
  **Schema Justification**
 - **TEAM** table keeps an atomic counter votes for fast read queries in the results dashboard
 - **VOTER** use matric_no as natural PK to guarantee uniqueness per institution
 - **ADMIN** is isolated from VOTER to avoid role confusion and simplifu auth logic
 - Foreign key team_id in VOTER enables quick JOIN to know who voted which team for audit
+
+## Business Logic And Data Validation
+
+### Flowchart
+
+**Voters Flowchart**
+![fcvoters](https://github.com/user-attachments/assets/54a8d144-e175-4b81-bbff-23d9d989acdc)
+
+**Admins Flowchart**
+![fcadmin](https://github.com/user-attachments/assets/d026b894-f677-4175-90ec-1a6312dd0787)
