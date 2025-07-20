@@ -81,6 +81,16 @@ Eror 409
 { "error": "Already voted" }
 ```
 
+### 🔒 Security
+
+- Basic token-based security:
+  - Voters use matric number as login and as Bearer token
+  - Staff use username + password (currently plaintext, with BCrypt support available)
+- All protected routes require a valid Authorization header:
+  - Voter routes require a valid matricNo token
+  - Staff routes require a valid staff token
+- Spring Security handles route protection and custom authentication logic via Authentica
+
 ### 📱 Frontend Applications
 
 | # | Method | Endpoint            | Headers / Body                                                 | cURL snippet                                                                                                                             |
