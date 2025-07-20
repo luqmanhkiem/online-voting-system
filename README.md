@@ -49,7 +49,9 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 ### Flowchart
 
 **Voters Flowchart**
+
 ![fcvoters](https://github.com/user-attachments/assets/54a8d144-e175-4b81-bbff-23d9d989acdc)
 
 **Admins Flowchart**
+
 ![fcadmin](https://github.com/user-attachments/assets/d026b894-f677-4175-90ec-1a6312dd0787)
