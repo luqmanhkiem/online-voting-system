@@ -4,7 +4,7 @@
 | Muhammad Daniel Bin Hasbullah   | B032310 |
 | Fuad Bin Mohd Razali| B032310705  |
 | Muhammad Nizar Rifa'at Bin       | B032310611    |
-| Khawarizmi    | B032310  |
+| Khawaryzme    | B032310  |
 | Ahmad Luqmanul Hakiem Bin Rusli | B0323108853 |
 ## 📌 Project Overview
 The Online Voting System is a secure, web-based ballot platform designed to digitise elections in schools, universities, clubs and small–to–medium organisations.
