@@ -46,19 +46,39 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 
 ### Example Success and Error Responses 
 
-**1 POST /login***
+**1. POST /login**
 
 Success Response 200
 
-```{
+{
   "token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
   "role": "voter",
   "expires_in": 3600
-}```
+}
 
 Error Response 401
 
 { "error": "Invalid credentials" }
+
+**2. GET /teams**
+
+Success Response 200
+
+[
+  { "id": 1, "name": "Team Kasturi", "votes": 124 },
+  { "id": 2, "name": "Team Lestari", "votes": 98 },
+  { "id": 3, "name": "Team Jebat",   "votes": 117 }
+]
+
+**3. POST /vote**
+
+Success 201
+
+{ "message": "Vote recorded" }
+
+Eror 409
+
+{ "error": "Already voted" }
 
 
 ## Database Design
