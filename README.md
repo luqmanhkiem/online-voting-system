@@ -1,7 +1,7 @@
 # 🗳️ Online Voting System
 | Name               | Matrics No.              |
 | ------------------ | ------------------------ |
-| Muhammad Daniel Bin Hasbullah   | B032310 |
+| Muhammad Daniel Bin Hasbulah   | B032310612 |
 | Fuad Bin Mohd Razali| B032310705  |
 | Muhammad Nizar Rifa'at Bin       | B032310611    |
 | Muhammad Khawarizmi Bin Mohd Saffian   | B032310589 |
