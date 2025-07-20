@@ -138,3 +138,17 @@ Eror 409
 **Admins Flowchart**
 
 ![fcadmin](https://github.com/user-attachments/assets/d026b894-f677-4175-90ec-1a6312dd0787)
+
+### ✅ Data Validation Rules
+
+| **Area** | **Field / Action** | **Rule** | **Frontend** | **Backend** |
+| --- | --- | --- | --- | --- |
+| **Login** | Matric Number | Regex `^A\d{2}[A-Z]{2}\d{4}$` (or institute pattern) | Inline red message | Unique in `voter.matric_no`; case-insensitive |
+| **Vote** | Team selection | Not empty | Disable “Submit” if empty | FK must exist in `team.id`; 422 if missing |
+| **Vote** | One vote only | — | Disable form if cookie shows “voted” | Transaction: check `voter.voted = 0`; 409 if already voted |
+| **Admin** | Username | Alphanumeric 3-50 chars | HTML5 pattern | Unique in `staff.username` |
+| **Admin** | Password | ≥ 8 chars, 1 upper, 1 lower, 1 digit | Real-time strength meter | Bcrypt hash stored |
+| **Export** | Google token | — | — | Verify JWT role = admin; 403 otherwise |
+| **API** | JWT | — | Stored in HttpOnly cookie | Verify signature & exp; 401 if invalid |
+
+> All SQL parameters are bound via PDO prepared statements to prevent injection.
