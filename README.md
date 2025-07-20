@@ -50,11 +50,11 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 
 Success Response 200
 
-`{
+'''{
   "token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
   "role": "voter",
   "expires_in": 3600
-}`
+}'''
 
 Error Response 401
 
