@@ -44,6 +44,23 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 | 6 | POST   | `/api/staff/export` | Header: `Authorization: Bearer admin`                          | `curl -X POST http://localhost:8080/api/staff/export -H "Authorization: Bearer admin"`                                                   |
 
 
+### Example Success and Error Responses 
+
+**1 POST /login***
+
+Success Response 200
+
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGc...",
+  "role": "voter",
+  "expires_in": 3600
+}
+
+Error Response 401
+
+{ "error": "Invalid credentials" }
+
+
 ## Database Design
 
 ### Entity-Relationship Diagram
