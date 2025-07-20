@@ -173,16 +173,55 @@ Central **real-time dashboard** for staff/admins to:
 
 ![fcadmin](https://github.com/user-attachments/assets/d026b894-f677-4175-90ec-1a6312dd0787)
 
-### ✅ Data Validation Rules
+## ✅ Data Validation
 
-| **Area** | **Field / Action** | **Rule** | **Frontend** | **Backend** |
-| --- | --- | --- | --- | --- |
-| **Login** | Matric Number | Regex `^A\d{2}[A-Z]{2}\d{4}$` (or institute pattern) | Inline red message | Unique in `voter.matric_no`; case-insensitive |
-| **Vote** | Team selection | Not empty | Disable “Submit” if empty | FK must exist in `team.id`; 422 if missing |
-| **Vote** | One vote only | — | Disable form if cookie shows “voted” | Transaction: check `voter.voted = 0`; 409 if already voted |
-| **Admin** | Username | Alphanumeric 3-50 chars | HTML5 pattern | Unique in `staff.username` |
-| **Admin** | Password | ≥ 8 chars, 1 upper, 1 lower, 1 digit | Real-time strength meter | Bcrypt hash stored |
-| **Export** | Google token | — | — | Verify JWT role = admin; 403 otherwise |
-| **API** | JWT | — | Stored in HttpOnly cookie | Verify signature & exp; 401 if invalid |
+### 🧪 Frontend Validation
 
-> All SQL parameters are bound via PDO prepared statements to prevent injection.
+The frontend performs basic input validation to ensure data integrity and improve user experience:
+
+- 🧑‍🎓 Voter Login:
+  - Checks if the matric number field is not empty before sending a login request.
+- 🧑‍💼 Staff Login:
+  - Ensures both username and password fields are filled.
+- 🗳️ Voting:
+  - Requires a team to be selected before casting a vote.
+  - Displays clear feedback if a vote has already been cast.
+
+Validation feedback is displayed using Bulma styling (e.g., has-text-danger for error messages).
+
+---
+
+### 🛡️ Backend Validation
+
+The backend includes robust validation and error handling to prevent unauthorized or invalid operations:
+
+- 🔐 Voter Authentication:
+  - Checks if the provided matric number exists in the database.
+  - Throws an error if the matric number is not registered.
+
+- 🔐 Staff Authentication:
+  - Verifies if the username exists and if the password matches.
+  - Password is stored securely using BCrypt hashing (if encoder is enabled).
+
+- 🗳️ Voting Process:
+  - Validates Authorization header and parses the token.
+  - Ensures the voter has not already voted.
+  - Confirms the team ID exists before registering a vote.
+  - Records a vote only if all conditions are met (atomic transaction).
+
+- 📤 Export Validation:
+  - Validates Firebase initialization before exporting.
+  - Clears existing Firestore documents to avoid duplication.
+  - Catches and logs all exceptions during export.
+
+---
+
+### 🧱 Fail-Safe Responses
+
+- All invalid or unauthorized requests result in appropriate error responses:
+  - Missing or malformed tokens
+  - Nonexistent matric numbers
+  - Already voted condition
+  - Firebase export failures
+
+Errors are returned with meaningful messages to aid debugging and improve UX.
