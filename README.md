@@ -39,9 +39,6 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 | 1 | POST   | `/api/login`         | Body (JSON): `{ "matricNo": "B032310678" }` | `curl -X POST http://localhost:8080/api/login -H "Content-Type: application/json" -d '{"matricNo":"B032310678"}'` |
 | 2 | GET    | `/api/teams`         | none                                        | `curl http://localhost:8080/api/teams`                                                                            |
 | 3 | POST   | `/api/vote?teamId=2` | Header: `Authorization: Bearer B032310678`  | `curl -X POST "http://localhost:8080/api/vote?teamId=2" -H "Authorization: Bearer B032310678"`                    |
-| 4 | POST   | `/api/staff/login`  | Body (JSON): `{ "username": "admin", "password": "admin123" }` | `curl -X POST http://localhost:8080/api/staff/login -H "Content-Type: application/json" -d '{"username":"admin","password":"admin123"}'` |
-| 5 | GET    | `/api/staff/teams`  | Header: `Authorization: Bearer admin`                          | `curl http://localhost:8080/api/staff/teams -H "Authorization: Bearer admin"`                                                            |
-| 6 | POST   | `/api/staff/export` | Header: `Authorization: Bearer admin`                          | `curl -X POST http://localhost:8080/api/staff/export -H "Authorization: Bearer admin"`                                                   |
 
 
 ### Example Success and Error Responses 
@@ -59,29 +56,65 @@ Success Response 200
 ```
 
 Error Response 401
-
+```
 { "error": "Invalid credentials" }
-
+```
 **2. GET /teams**
 
 Success Response 200
-
+```
 [
   { "id": 1, "name": "Team Kasturi", "votes": 124 },
   { "id": 2, "name": "Team Lestari", "votes": 98 },
   { "id": 3, "name": "Team Jebat",   "votes": 117 }
 ]
-
+```
 **3. POST /vote**
 
-Success 201
-
+Success 201`
+```
 { "message": "Vote recorded" }
-
+```
 Eror 409
-
+```
 { "error": "Already voted" }
+```
 
+### 📱 Frontend Applications
+
+| # | Method | Endpoint            | Headers / Body                                                 | cURL snippet                                                                                                                             |
+| - | ------ | ------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| 4 | POST   | /api/staff/login  | Body (JSON): { "username": "admin", "password": "admin123" } | curl -X POST http://localhost:8080/api/staff/login -H "Content-Type: application/json" -d '{"username":"admin","password":"admin123"}' |
+| 5 | GET    | /api/staff/teams  | Header: Authorization: Bearer admin                          | curl http://localhost:8080/api/staff/teams -H "Authorization: Bearer admin"                                                            |
+| 6 | POST   | /api/staff/export | Header: Authorization: Bearer admin                          | curl -X POST http://localhost:8080/api/staff/export -H "Authorization: Bearer admin"
+
+#### 1️⃣ Voter Web App
+- **Purpose**  
+  Allows voters to log in with their **matric number**, view teams, and cast **one single vote**.
+
+- **Technology Stack**  
+  • Pure **HTML5**, **CSS3**, **vanilla JavaScript (ES6)**  
+  • Zero build step; files served statically by Apache/Nginx
+
+- **API Integration**  
+  • All network calls via `fetch()`  
+  • JWT stored in an **HttpOnly cookie** (automatically attached)  
+  • After a successful vote the UI **disables the form** and displays “Already voted”
+
+---
+
+#### 2️⃣ Admin Web App
+- **Purpose**  
+  Dashboard for **staff/admins** to observe **live results**, browse the **voter list**, and trigger a **Google-Sheet export**.
+
+- **Technology Stack**  
+  • Same as voter app: HTML, CSS, JS  
+  • **Chart.js v4** for a real-time bar chart that refreshes every **10 s**
+
+- **API Integration**  
+  • Uses `fetch()` with the JWT cookie  
+  • Polling endpoint `/teams` every 10 s for live updates  
+  • On **Export** click, calls `/export/sheet` and opens the returned Google Sheet URL in a new tab
 
 ## Database Design
 
