@@ -167,11 +167,28 @@ Central **real-time dashboard** for staff/admins to:
 
 **Voters Flowchart**
 
-![fcvoters](https://github.com/user-attachments/assets/54a8d144-e175-4b81-bbff-23d9d989acdc)
+flowchart TD
+    A[Student opens voter-app.html] --> B[Enter Matric No]
+    B --> C[POST /api/login {matricNo}]
+    C --> D{Valid?}
+    D -->|No| B1[Show error & retry]
+    D -->|Yes| E[Store token in localStorage]
+    E --> F[GET /api/teams]
+    F --> G[Display teams + progress bars]
+    G --> H{Countdown active?}
+    H -->|No| H1[Show "Voting ended"]
+    H -->|Yes| I[Student clicks Vote]
+    I --> J[POST /api/vote?teamId]
+    J --> K{Already voted?}
+    K -->|Yes| L[Show "Already voted"]
+    K -->|No| M[DB transaction:\nvoter.voted = true\nteam.votes++\nvote row inserted]
+    M --> N[Show "Vote successful"]
+
 
 **Admins Flowchart**
 
-![fcadmin](https://github.com/user-attachments/assets/d026b894-f677-4175-90ec-1a6312dd0787)
+![admin](https://github.com/user-attachments/assets/02ae50a4-3b90-4e6f-9a55-a4423a23e0f3)
+
 
 ## ✅ Data Validation
 
