@@ -3,7 +3,7 @@
 | ------------------ | ------------------------ |
 | Muhammad Daniel Bin Hasbulah   | B032310612 |
 | Fuad Bin Mohd Razali| B032310705  |
-| Muhammad Nizar Rifa'at Bin Mohd Zaini       | B032310611    |
+| Muhammad Nizar Rifa'at Bin       | B032310611    |
 | Muhammad Khawarizmi Bin Mohd Saffian   | B032310589 |
 | Ahmad Luqmanul Hakiem Bin Rusli | B032310853 |
 ## 📌 Project Overview
@@ -14,14 +14,15 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 | Value Driver         | Details                                                                                                                                                                                                                                                                     |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Market Potential** | • Ready-to-deploy Software as a Service for institutions that run annual elections (student councils, club committees, company or board-level-decision).                                                                                           |
-| **Third-Party APIs** | • **Google Sheets API** – enables non-technical staff to audit and share live voter data without database access. Chosen because: (a) zero-learning-curve for spreadsheet users, (b) built-in version history & sharing, (c) free tier covers most institutional use-cases. |
+| **Third-Party APIs** | • **Firebase Realtime Database** – Used to store and sync the voter list and voting status securely in real time. This enables: (a) Cloud-based backup of data. (b) Cross-device access to results. (c) Live updates for reports and audits|
 
 ## High Level Diagram
- -gambar diagram
-- **Frontend Apps**: Separate views for Voters and Admin
-- **Backend**: PHP server handles business logic and API endpoints
-- **Database**: MySQL stores users, teams, and votes
-- **External Service**: Google Sheets API for data export
+![hld](https://github.com/user-attachments/assets/70126354-7b7c-48e4-b0d9-51c8fb0978c7)
+
+- **Frontend Apps**: Separate views for voters and admin
+- **Backend**: PHP server handles API logic
+- **Database**: MySQL stores local data; Firebase stores synced voter/export data
+- **External Service**: Firebase for real-time monitoring and data export
 
 ---
 
@@ -30,8 +31,8 @@ It eliminates paper ballots, reduces human error, and provides real-time results
 ### Technology Stack
 - **Language**: PHP
 - **Database**: MySQL
-- **External Service**: Google Sheets API
-- **Security**: Basic Session-based Auth
+- **External Service**: Firebase Realtime Database
+- **Security**: Basic Session-based Authentication
 
 
 | # | Method | Endpoint & Query     | Headers / Body                              | cURL snippet                                                                                                      |
